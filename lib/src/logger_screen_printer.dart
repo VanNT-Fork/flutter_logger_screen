@@ -131,13 +131,14 @@ class LoggerScreenPrinter extends PrettyPrinter {
     final result = await loadLogs(filter);
     final map = await getLevelCountMap(terms: _filter.search);
     levelsCounts = Map.from(map);
-    if (result.isEmpty && _filter.page > 1) {
-      _filter = _filter.copyWithPage(_filter.page - 1);
-    }
     if (_filter.page == 1) {
       logs = List.from(result);
     } else {
       logs.addAll(result);
+    }
+
+    if (result.isEmpty && _filter.page > 1) {
+      _filter = _filter.copyWithPage(_filter.page - 1);
     }
 
     for (final log in result) {
